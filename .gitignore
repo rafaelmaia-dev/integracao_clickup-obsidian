@@ -1,2 +1,33 @@
+# Variáveis de ambiente (TOKENS, SENHAS, etc.)
 .env
 
+# Virtual environment
+.venv/
+venv/
+env/
+
+# Python cache
+__pycache__/
+*.py[cod]
+*.pyo
+*.egg-info/
+dist/
+build/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Coverage de testes
+htmlcov/
+.coverage
+.pytest_cache/
