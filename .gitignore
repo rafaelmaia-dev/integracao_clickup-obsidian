@@ -6,6 +6,8 @@
 venv/
 env/
 
+.git
+
 # Python cache
 __pycache__/
 *.py[cod]
