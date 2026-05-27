@@ -28,7 +28,10 @@ class ClickUpClient:
             return response.json()
         
         except requests.exceptions.RequestException as e:
-            logger.error(f"Erro ao buscar o teams: {e} ")
+            if e.response is not None:
+                logger.error(f"Erro ao buscar os teams - HTTP {e.response.status_code}")
+            else:
+                logger.error(f"Erro ao buscar os teams - {type(e).__name__}")
             raise
 
 
@@ -46,7 +49,10 @@ class ClickUpClient:
             return response.json()
         
         except requests.exceptions.RequestException as e:
-            logger.error(f"Erro ao buscar o spaces: {e}")
+            if e.response is not None:
+                logger.error(f"Erro ao buscar os spaces do team {team_id} - HTTP {e.response.status_code}")
+            else:
+                logger.error(f"Erro ao buscar os spaces do team {team_id} - {type(e).__name__}")
             raise
 
 
@@ -64,7 +70,10 @@ class ClickUpClient:
             return response.json()
 
         except requests.exceptions.RequestException as e:
-            logger.error(f"Erro ao buscar o folder: {e}")
+            if e.response is not None:
+                logger.error(f"Erro ao buscar os folders do space {space_id} - HTTP {e.response.status_code}")
+            else:
+                logger.error(f"Erro ao buscar os folders do space {space_id} - {type(e).__name__}")
             raise
 
 
@@ -82,7 +91,10 @@ class ClickUpClient:
             return response.json()
 
         except requests.exceptions.RequestException as e:
-            logger.error(f"Erro ao buscar as lists do folder {folder_id}: {e}")
+            if e.response is not None:
+                logger.error(f"Erro ao buscar as lists do folder {folder_id} - HTTP {e.response.status_code}")
+            else:
+                logger.error(f"Erro ao buscar as lists do folder {folder_id} - {type(e).__name__}")
             raise
 
 
@@ -101,9 +113,11 @@ class ClickUpClient:
             return response.json()
 
         except requests.exceptions.RequestException as e:
-            logger.error(f"Erro ao buscar as tarefas das listas {list_id}: {e}")
+            if e.response is not None:
+                logger.error(f"Erro ao buscar as tasks da list {list_id} - HTTP {e.response.status_code}")
+            else:
+                logger.error(f"Erro ao buscar as tasks da list {list_id} - {type(e).__name__}")
             raise
-
 
 
 
