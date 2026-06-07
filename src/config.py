@@ -1,7 +1,9 @@
 from dotenv import load_dotenv
+from pathlib import Path
 import os
 
-load_dotenv(".env")
+result = Path(__file__).parent.parent / ".env"
+load_dotenv(result)
 
 class Config:
     CLICKUP_API_URL = "https://api.clickup.com/api/v2"
