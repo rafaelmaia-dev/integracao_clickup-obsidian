@@ -36,17 +36,18 @@ dt_cr: {dt_cr}
             descricao_md = ""
         return f"# {name}\n\n{descricao_md}"
 
-if __name__ == "__main__":
-    task_fake = {
-        "id": "abc123",
-        "name": "Criar tela de login",
-        "description": "<p>Implementar o <b>formulário</b> de login.</p>",
-        "status": {"status": "em andamento"},
-        "priority": {"priority": "alta"},
-        "url": "https://app.clickup.com/t/abc123",
-        "date_created": "1716825600000"
-    }
-    converter = MarkdownConverter()
-    print(converter._build_frontmatter(task_fake))
-    print()
-    print(converter._build_body(task_fake))
+
+
+    def convert(self, task: dict) -> str:
+        resultado1 = self._build_frontmatter(task)
+        resultado2 = self._build_body(task)
+        logger.info(f"Task: '{task.get('name')}' convertida com sucesso. ")
+        return f"{resultado1}\n\n{resultado2}"
+        
+
+
+        
+
+       
+
+
