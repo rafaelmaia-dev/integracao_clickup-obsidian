@@ -25,15 +25,17 @@ class ObsidianWriter:
 
 
     def write(self, space_name: str, folder_name: str, task_name: str, content: str) -> Path:
-
-        file_path = self._build_path(space_name, folder_name, task_name)
-        file_path.write_text(content, encoding="utf-8")
-
-        logger.info(f"{file_path} Salvo com sucesso! ")
-
-        return file_path
-        
-      
+        try: 
+            file_path = self._build_path(space_name, folder_name, task_name)
+            file_path.write_text(content, encoding="utf-8")
+            if file_path.exists():
+               logger.info(f"{file_path} Salvo com sucesso! ")
+               return file_path                   
+        except OSError as e:
+            logger.error(f"Erro de I/O ao salvar '{file_path}': {e.strerror}")
+            raise
+     
+         
 if __name__ == "__main__":
      writer = ObsidianWriter(Config.OBSIDIAN_VAULT_PATH)
 
