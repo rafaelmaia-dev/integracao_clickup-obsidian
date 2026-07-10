@@ -1,3 +1,4 @@
+import datetime 
 import html2text
 from src.utils.logger import logger
 
@@ -10,14 +11,15 @@ class MarkdownConverter:
 
 
     def _build_frontmatter(self, task: dict) -> str:
-        id = task.get("id", "")
+        task_id = task.get("id", "")
         status = task.get("status", {}).get("status", "")
         priority = task.get("priority", {}).get("priority", "sem prioridade")
         url = task.get("url", "")
-        dt_cr = task.get("date_created", "")
+        ts = int(task.get("date_created", 0))
+        dt_cr = datetime.datetime.fromtimestamp(ts / 1000).strftime("%Y-%m-%d")
 
         return f"""---
-id: {id}
+task_id: {task_id}
 status: {status}
 priority: {priority}
 url: {url}
@@ -39,11 +41,14 @@ dt_cr: {dt_cr}
 
 
     def convert(self, task: dict) -> str:
-        resultado1 = self._build_frontmatter(task)
-        resultado2 = self._build_body(task)
-        logger.info(f"Task: '{task.get('name')}' convertida com sucesso. ")
-        return f"{resultado1}\n\n{resultado2}"
-        
+        try:
+            resultado1 = self._build_frontmatter(task)
+            resultado2 = self._build_body(task)
+            logger.info(f"Task: '{task.get('name')}' convertida com sucesso. ")
+            return f"{resultado1}\n\n{resultado2}"
+        except Exception as e:
+            logger.error(f"Erro ao converter task '{task.get('name')}': {e}")
+            raise
 
 
         
